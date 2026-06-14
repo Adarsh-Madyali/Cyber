@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as GeneratorRouteImport } from './routes/generator'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BreachRouteImport } from './routes/breach'
 import { Route as AnalyzerRouteImport } from './routes/analyzer'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GeneratorRoute = GeneratorRouteImport.update({
   id: '/generator',
   path: '/generator',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/breach': typeof BreachRoute
   '/dashboard': typeof DashboardRoute
   '/generator': typeof GeneratorRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/breach': typeof BreachRoute
   '/dashboard': typeof DashboardRoute
   '/generator': typeof GeneratorRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,33 @@ export interface FileRoutesById {
   '/breach': typeof BreachRoute
   '/dashboard': typeof DashboardRoute
   '/generator': typeof GeneratorRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analyzer' | '/breach' | '/dashboard' | '/generator'
+  fullPaths:
+    | '/'
+    | '/analyzer'
+    | '/breach'
+    | '/dashboard'
+    | '/generator'
+    | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analyzer' | '/breach' | '/dashboard' | '/generator'
-  id: '__root__' | '/' | '/analyzer' | '/breach' | '/dashboard' | '/generator'
+  to:
+    | '/'
+    | '/analyzer'
+    | '/breach'
+    | '/dashboard'
+    | '/generator'
+    | '/sitemap.xml'
+  id:
+    | '__root__'
+    | '/'
+    | '/analyzer'
+    | '/breach'
+    | '/dashboard'
+    | '/generator'
+    | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,10 +105,18 @@ export interface RootRouteChildren {
   BreachRoute: typeof BreachRoute
   DashboardRoute: typeof DashboardRoute
   GeneratorRoute: typeof GeneratorRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/generator': {
       id: '/generator'
       path: '/generator'
@@ -125,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   BreachRoute: BreachRoute,
   DashboardRoute: DashboardRoute,
   GeneratorRoute: GeneratorRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
