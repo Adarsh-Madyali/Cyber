@@ -9,8 +9,12 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { Toaster } from "sonner";
+
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "@/components/layout/Header";
 
 function NotFoundComponent() {
   return (
